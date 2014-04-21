@@ -121,13 +121,11 @@ class RequestsMock(object):
             if request.method != match['method']:
                 continue
 
-            # TODO(dcramer): we could simplify this by compiling a single
-            # regexp on register
             if match['match_querystring']:
                 if not re.match(re.escape(match['url']), url):
                     continue
             else:
-                if match['url'] != url_without_qs:
+                if not re.match(re.compile(match['url']),url_without_qs):
                     continue
 
             return match
