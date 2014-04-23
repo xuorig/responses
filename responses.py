@@ -115,7 +115,6 @@ class RequestsMock(object):
 
     def _find_match(self, request):
         url = request.url
-        url_without_qs = url.split('?', 1)[0]
 
         for match in self._urls:
             if request.method != match['method']:
@@ -125,7 +124,7 @@ class RequestsMock(object):
                 if not re.match(re.escape(match['url']), url):
                     continue
             else:
-                if not re.match(re.compile(match['url']),url_without_qs):
+                if not re.match(re.compile(match['url']),url):
                     continue
 
             return match
@@ -158,7 +157,7 @@ class RequestsMock(object):
 
         adapter = HTTPAdapter()
 
-        response = adapter.build_response(request, response)
+        response = adapter.build_response(request, response)
         if not match['stream']:
             response.content  # NOQA
 
